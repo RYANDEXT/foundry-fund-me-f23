@@ -15,19 +15,24 @@ contract FundMeTest is Test {
         fundMe = deployFundMe.run();
     }
 
-    function testMinimumDollarIsFive() public {
+    function testMinimumDollarIsFive() public view {
         assertEq(fundMe.MINIMUM_USD(), 5e18);
     }
 
-    function testOwnerIsMsgSender() public {
-        console.log("msg.sender:", msg.sender);
-        console.log("i_owner:", fundMe.i_owner());
-        console.log("address(this):", address(this));
+    function testOwnerIsMsgSender() public view {
         assertEq(fundMe.i_owner(), msg.sender);
     }
 
-    function testPriceFeedVersionIsAccurate() public {
-        uint256 version = fundMe.getVersion();
-        assertEq(version, 4);
-    }
+    function testPriceFeedVersionIsAccurate() public view {
+        if (block.chainid == 11155111) {
+            uint256 version = fundMe.getVersion();
+            assertEq(version, 4);
+        } else if (block.chainid == 1) {
+            uint256 version = fundMe.getVersion();
+            assertEq(version, 6);
+        } else{
+            uint256 version = fundMe.getVersion();
+            assertEq(version, 4);
+        }
+    } 
 }
