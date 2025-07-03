@@ -1,0 +1,7 @@
+{
+    "includePath": "lib",
+    "remappings": [
+        "@chainlink/=lib/chainlink-brownie-contracts/",
+        "forge-std/=lib/forge-std/src/"
+    ]
+}
